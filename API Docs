@@ -1,0 +1,177 @@
+This file contains the entities and the corresponding api endpoints.
+
+User
+
+  Attributes:
+    id (String): a unique identifier
+    name (String): 
+    username (String):
+    address (String):
+    branch (String):
+    password (String):
+    contact (Number): 10 digit phone no. 
+    emailID (String): users institute email id
+    esign (String): base 64 image of e signature.
+    notifications ():
+    roles: Array<String>
+
+  Endpoints:
+    GET: .../users/{id}
+    Parameters: id, unique identifier of the user.
+    Returns the user object corresponding to its id.
+    
+    GET : .../users?username={username}
+    Parameters: username, shorthand name unique to each user.
+    Returns the user object corresponding to its username
+    
+    PUT: .../users/{id}
+    Parameters: id, unique identifier of the user.
+    Payload: complete user object with attributes shown above.
+
+Forms
+
+  Attributes
+    id (String): unique identifier for a form.
+    title (String): 
+    schema (JSON Object):
+    uischema (JSON Object):
+    
+  Endpoints
+    GET: .../forms/{id}
+    Parameters: id, unique identifier of the form.
+    Returns the form object corresponding to its id.
+    
+    GET : .../forms?title={title}
+    Parameters:title, title of the form.
+    Returns the form object corresponding to its title.
+    
+    POST: .../forms
+    Parameters: id, unique identifier of the form.
+    Payload: complete form object with attributes shown above.
+    
+    PUT: .../forms/{id}
+    Parameters: id, unique identifier of the form.
+    Payload: complete form object with attributes shown above.
+
+FlowChart
+  Attributes:
+    id (String):
+    title (String):
+    chart (JSON Object):
+
+  Endpoints:
+    GET: .../flowchart/{id}
+    Parameters: id, unique identifier of the flowchart.
+    Returns the flowchart object corresponding to its id.
+
+    GET : .../flowchart?title={title}
+    Parameters: title, the title of the flowchart.
+    Returns the flowchart object corresponding to its title.
+
+    POST: .../flowchart
+    Parameters: id, unique identifier of the flowchart.
+    Payload: complete flowchart object with attributes shown above.
+
+    PUT: .../flowchart/{id}
+    Parameters: id, unique identifier of the flowchart.
+    Payload: complete flowchart object with attributes shown above.
+  
+Menu
+  Attributes
+    id( will always be 0 ): for the sake of PUT to work.
+    content (JSON Object): with arrays of categories of forms. (Refer db.json)
+    
+  Endpoints
+    GET: .../menu
+    Return a complete menu object.
+    
+    PUT: .../menu/id
+    payload :  complete JSON Object.
+  
+TODO List
+  Attributes :
+    id : the userid of User to whom the TODO list belongs to
+    Items :(array) list of TODO json 
+      id (string) : any unique string
+      task(string) : “Complete some procedure”
+      checked(boolean) : true
+  
+  Endpoints
+  GET ../todo_list/id  //userid
+  PUT .../todo_list/id, payload update TODO list with payload(array of JSON)
+  
+Pending Requests
+  Attributes :
+    id: this should be the same as the user’s id who has to approve.
+    Requests (Array): list of all pending requests(JSON).
+      id (String): this should be the same as work flow’s id.
+      nameofSender (String): Name of the user who initiated.
+      subject (String): subject/ title of the workflow. 
+      status (String): current status of the workflow.
+      date (timestamp): date of initiation.
+      receivedon (timestamp): time when request was appended to this array.
+  Endpoints :
+    GET: .../pending_requests/{id}
+    Parameters: id, unique identifier of the user who has to approve.
+    Returns the complete object corresponding to its id.
+  
+Notifications :
+  Attributes
+    id : user-id 
+    notifs: Array of JSON where one json is of the form
+      title: String
+      content: String
+  Endpoints
+    GET: .../notifications/{id}
+    Parameters: id, unique identifier of the user who has to approve.
+    Returns the complete object corresponding to its id.
+    
+    POST: ../notifications/{id}
+
+Workflow
+  Attributes:
+    id: unique identifier for the workflow.
+    User: name of user
+    Title: “Application for Sports Sec”
+    FormData (JSON Object): attr- value pairs of the form filled.
+            Ex: SIH Reimbursement
+    “TeamLeader”: “Chaitya”
+    “TeamName”: “BitWise”
+    “Upload_Documents” : [ data-url, data-url, data-url ]
+    FlowChart (JSON Object): 
+    Node: (JSON Object) : { “Node1”: {
+    approvedBy: {“Keskar ” : false}
+    nextNodes: [  ]
+    Timestamp: “”
+    Type; “start Node”
+            }	
+    Comments (Array):
+    id (Number): comment id 
+    name (String): name of user who added the comment.
+    message (String): string of message
+    Time: time when comment was submitted.
+    Signatures: { “Keskar” : “64bit image”}
+    Path : [ node1, node2]
+    nextNodes : [ node3, node4 ]
+    Feedback : “Approved by X”
+    Feedback_ts : 32973027
+    formId : 232
+    send_requests: [ AP001, AP002]   //userids
+    cancel_requests:[ DIR001, AP002 ] //userids
+    flowchartId : 232
+    status: active/terminated
+    begin_timestamp : “Jul 5 12;02, 2020”
+    end_timestamp : “Jul 5 12;02, 2020”
+    priority : boolean (true - high)  
+    
+Endpoints :
+  GET: .../workflow/{id}
+  Parameters: id, unique identifier of the workflow
+  Returns the complete object corresponding to its id.
+  
+  GET : .../workflow?User=${username}&Title=${title}`
+  PUT : .../ workflow/id
+  Payload : workflow object
+  POST : .../workflow
+  Payload: workflow object
+  GET my_workflows : .../workflow/?User=${username} return List of workflow objects
